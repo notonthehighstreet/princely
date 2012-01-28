@@ -5,7 +5,9 @@ module Princely
   class Railtie < Rails::Railtie
 
     initializer :init_mime_types do
-      Mime::Type.register 'application/pdf', :pdf
+      unless Mime::Type.lookup_by_extension(:pdf)
+        Mime::Type.register 'application/pdf', :pdf
+      end
     end
 
     initializer :insert_into_action_controller do
