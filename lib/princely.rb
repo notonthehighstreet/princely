@@ -1,4 +1,4 @@
-# PrinceXML Ruby interface. 
+# PrinceXML Ruby interface.
 # http://www.princexml.com
 #
 # Library by Subimage Interactive - http://www.subimage.com
@@ -19,7 +19,7 @@ module Princely
 
   class Prince
     VERSION = "1.0.0" unless const_defined?("VERSION")
-    
+
     attr_reader :exe_path, :style_sheets, :log_file, :logger
 
     # Initialize method
@@ -32,7 +32,7 @@ module Princely
       @log_file = "#{Rails.root}/log/prince.log"
       @logger = Rails.logger
     end
-    
+
     # Sets stylesheets...
     # Can pass in multiple paths for css files.
     #
@@ -41,7 +41,7 @@ module Princely
         @style_sheets << " -s #{sheet} "
       end
     end
-    
+
     # Returns fully formed executable path with any command line switches
     # we've set based on our variables.
     #
@@ -51,7 +51,7 @@ module Princely
       @exe_path << @style_sheets
       return @exe_path
     end
-    
+
     # Makes a pdf from a passed in string.
     #
     # Returns PDF as a stream, so we can use send_data to shoot
@@ -59,35 +59,36 @@ module Princely
     #
     def pdf_from_string(string, output_file = '-')
       path = self.exe_path()
-      # Don't spew errors to the standard out...and set up to take IO 
+      # Don't spew errors to the standard out...and set up to take IO
       # as input and output
       path << ' --silent - -o -'
-      
+
       # Show the command used...
       logger.info "\n\nPRINCE XML PDF COMMAND"
       logger.info path
       logger.info ''
-      
+
       # Actually call the prince command, and pass the entire data stream back.
       pdf = IO.popen(path, "w+")
       pdf.puts(string)
       pdf.close_write
       result = pdf.gets(nil)
       pdf.close_read
+      result.force_encoding('BINARY')
       return result
     end
 
     def pdf_from_string_to_file(string, output_file)
       path = self.exe_path()
-      # Don't spew errors to the standard out...and set up to take IO 
+      # Don't spew errors to the standard out...and set up to take IO
       # as input and output
       path << " --silent - -o '#{output_file}' >> '#{@log_file}' 2>> '#{@log_file}'"
-      
+
       # Show the command used...
       logger.info "\n\nPRINCE XML PDF COMMAND"
       logger.info path
       logger.info ''
-      
+
       # Actually call the prince command, and pass the entire data stream back.
       pdf = IO.popen(path, "w+")
       pdf.puts(string)
