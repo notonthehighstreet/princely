@@ -92,14 +92,7 @@ class Princely
     logger.info path
     logger.info ''
 
-    # Actually call the prince command, and pass the entire data stream back.
-    pdf = IO.popen(path, "w+")
-    pdf.puts(string)
-    pdf.close_write
-    result = pdf.gets(nil)
-    pdf.close_read
-    result.force_encoding('BINARY') if RUBY_VERSION >= "1.9"
-    return result
+    prince_command_result(string, path)
   end
 
   def pdf_from_string_to_file(string, output_file)
@@ -123,5 +116,17 @@ class Princely
     def self.info(msg)
       puts msg
     end
+  end
+
+  private
+
+  def prince_command_result(string, path)
+    pdf = IO.popen(path, "w+")
+    pdf.puts(string)
+    pdf.close_write
+    result = pdf.gets(nil)
+    pdf.close_read
+    result.force_encoding('BINARY') if RUBY_VERSION >= "1.9"
+    result
   end
 end
