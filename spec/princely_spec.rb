@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Princely do
   let(:html_doc) { "<html><body>Hello World</body></html>"}
-  
+
   it "generates a PDF from HTML" do
     pdf = Princely.new.pdf_from_string html_doc
     pdf.should start_with("%PDF-1.4")
@@ -37,7 +37,7 @@ describe Princely do
     it "defaults in Rails" do
       # Fake Rails for this test.
       Rails = double(:root => Pathname.new('in_rails'), :logger => nil)
-      
+
       prince = Princely.new
       prince.log_file.to_s.should == 'in_rails/log/prince.log'
 
