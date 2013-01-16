@@ -23,8 +23,6 @@ class Princely
 
   attr_accessor :exe_path, :style_sheets, :log_file, :logger
 
-  # Initialize method
-  #
   def initialize(options={})
     # Finds where the application lives, so we can call it.
     @exe_path = options[:path] || find_prince_executable
@@ -61,9 +59,7 @@ class Princely
   # Can pass in multiple paths for css files.
   #
   def add_style_sheets(*sheets)
-    for sheet in sheets do
-      @style_sheets << " -s #{sheet} "
-    end
+    sheets.each {|sheet| @style_sheets << " -s #{sheet} " }
   end
 
   # Returns fully formed executable path with any command line switches
@@ -73,7 +69,7 @@ class Princely
     # Add any standard cmd line arguments we need to pass
     @exe_path << " --input=html --server --log=#{log_file} "
     @exe_path << @style_sheets
-    return @exe_path
+    @exe_path
   end
 
   # Makes a pdf from a passed in string.
