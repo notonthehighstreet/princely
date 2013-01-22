@@ -23,6 +23,7 @@ describe "PdfHelper" do
 
   it "renders with options" do
     Princely.stub(:new => stub(:add_style_sheets => "", :pdf_from_string => ""))
+    stub_const("Rails", stub(:public_path => ""))
     subject.stub(:render_to_string => "")
     subject.render({:pdf => "file_name", :template => "controller/action.pdf.erb"}).should == "sent"
   end
@@ -31,7 +32,7 @@ describe "PdfHelper" do
     princly = stub(:pdf_from_string => "")
     Princely.stub(:new => princly)
     subject.stub(:render_to_string => "", :config => stub(:stylesheets_dir => "/"))
-    stub_const("Rails", stub(:application => stub(:assets => false)))
+    stub_const("Rails", stub(:application => stub(:assets => false), :public_path => ""))
     princly.should_receive(:add_style_sheets).with("/test.css")
     subject.render({:pdf => "file_name", :template => "controller/action.pdf.erb", :stylesheets => ["test.css"]}).should == "sent"
   end
