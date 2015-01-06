@@ -53,7 +53,7 @@ module PdfHelper
   end
 
   def asset_file_path(asset)
-    if Rails.application.assets
+    if Rails.application.assets && Rails.application.config.assets.enabled
       # Remove /assets/ from generated names and try and find a matching asset
       Rails.application.assets.find_asset(asset.gsub(/\/assets\//, "")).try(:pathname) || asset
     else
