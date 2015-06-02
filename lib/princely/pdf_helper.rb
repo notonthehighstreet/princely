@@ -38,7 +38,7 @@ module PdfHelper
     html_string.gsub!( /src=["']+([^:]+?)["']/i, "src=\"#{Rails.public_path}/\\1\"")
 
     # Remove asset ids on images with a regex
-    html_string.gsub!( /src=["'](\S+\?\d*)["']/i ) { |m| 'src="' + $1.split('?').first + '"' }
+    html_string.gsub!( /src=["'](\S+\?\d*)["']/i ) { |m| 'src="' + m[1].split('?').first + '"' }
     html_string
   end
 
