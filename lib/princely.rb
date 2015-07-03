@@ -30,7 +30,12 @@ class Princely
     raise "Cannot find prince command-line app at #{@exe_path}" if @exe_path && !File.executable?(@exe_path)
     @style_sheets = ''
     @log_file = options[:log_file]
+    @server = options[:server] || default_server_mode
     @logger = options[:logger]
+  end
+
+  def default_server_mode
+    true
   end
 
   def logger
@@ -67,7 +72,8 @@ class Princely
   #
   def exe_path
     # Add any standard cmd line arguments we need to pass
-    @exe_path << " --input=html --server --log=#{log_file} "
+    @exe_path << " --input=html --log=#{log_file} "
+    @exe_path << "--server " if @server
     @exe_path << @style_sheets
     @exe_path
   end
