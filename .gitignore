@@ -1,4 +1,5 @@
 *.gem
 tmp
-Gemfile.lock
 log
+vendor/bundle
+.bundle
