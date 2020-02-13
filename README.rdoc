@@ -1,6 +1,6 @@
 = Princely
 
-{<img src="https://travis-ci.org/dougdroper/princely.png?branch=master" alt="Build Status" />}[https://travis-ci.org/dougdroper/princely]
+{<img src="https://travis-ci.org/notonthehighstreet/princely.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/notonthehighstreet/princely]
 
 Princely is a simple wrapper for the Prince XML PDF generation library
 (http://www.princexml.com). The plugin will also automatically registers
